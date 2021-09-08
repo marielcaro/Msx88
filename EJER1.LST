@@ -1,0 +1,39 @@
+
+								p gina: 1 
+
+ Listado Fuente: ejer1.LST
+ Programa Fuente en: ejer1.ASM
+ Fecha: Tue Nov 14 16:27:48 2017
+
+ ÚDir.ÚCodigo maquina	 Linea¿	ÚCodigo en lenguaje ensamble
+
+			      1	PA	EQU	30h                  
+			      2	PB	EQU	31h
+			      3	CA	EQU	32h
+			      4	CB 	EQU	33h
+			      5	
+			      6		ORG	2000h	
+			      7	
+ 2000 B0 FF		      8		MOV 	AL, 0FFh ; 	PA entrada micr
+				oconmutadores
+ 2002 E6 32		      9		OUT 	CA, AL
+ 2004 B0 00		     10		MOV 	AL, 0;		PB salida luces
+				 
+ 2006 E6 33		     11		OUT	CB, AL
+			     12	
+ 2008 E4 30		     13	POLL:	IN	AL, PA
+ 200A E6 31		     14		OUT	PB, AL
+ 200C E9 08 20		     15		JMP	POLL
+			     16	
+			     17		END
+
+
+ S I M B O L O S:
+
+ Nombre:	Tipo:		Valor:
+
+ PA      	Number		  30h
+ PB      	Number		  31h
+ CA      	Number		  32h
+ CB      	Number		  33h
+ POLL    	Label		2008h

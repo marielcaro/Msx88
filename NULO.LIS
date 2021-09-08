@@ -1,0 +1,72 @@
+
+								p gina: 1 
+
+ Listado Fuente: NULO.list
+ Programa Fuente en: ejer2.ASM
+ Fecha: Mon Sep 18 17:15:27 2017
+
+ ÚDir.ÚCodigo maquina	 Linea¿	ÚCodigo en lenguaje ensamble
+
+			      1	PIO	EQU	30h ;inicializa los registros a
+				 partir de la direccion 30h, tdos los registrs s
+				e almacenan en posiciones cnsecutivas
+			      2	
+			      3		ORG 	1000h ;segmento de datosdefinid
+				o a partir de la direccion 1000h
+ 1000 68 6F 6C 61 20 6D	      4	DATO	DB	"hola mundo" ;
+ 1006 75 6E 64 6F
+ 100A 68		      5	FIN	DB	?
+			      6	
+			      7		ORG	2000h	
+			      8	
+ 2000 B0 FD		      9		MOV 	AL, 0FDh	; inicializa PI
+				O para impresora 0fdh indica valores de entrada 
+				cerrada
+ 2002 E6 32		     10		OUT 	PIO+2, AL
+ 2004 B0 00		     11		MOV 	AL, 0;		
+ 2006 E6 33		     12		OUT	PIO+3, AL
+ 2008 E4 30		     13		IN 	AL, PIO		; fin i
+				nicializacion
+ 200A 80 E0 FD		     14		AND 	AL, 0FDh
+ 200D E6 30		     15		OUT 	PIO, AL
+ 200F BB 00 10		     16		MOV	BX, OFFSET DATO ; indicando la 
+				cadena de caracteres, imprimiend caracter por ca
+				racter
+ 2012 B1 0A		     17		MOV 	CL, OFFSET FIN-OFFSET DATO ;ave
+				rigua la longitud de la cadena
+			     18	
+ 2014 E4 30		     19	POLL:	IN	AL, PIO ;ciclo de impresiòn
+Error: (null).
+ 2016 80 E0 01		     20		AND	AL, 1
+ 2019 75 F9		     21		JNZ	POLL
+ 201B 8A 07		     22		MOV 	AL, [BX]
+ 201D E6 31		     23		OUT	PIO+1, AL
+ 201F E4 30		     24		IN 	AL, PIO		; pulso
+				 strobe
+ 2021 80 C8 02		     25		OR	AL, 02h
+ 2024 E6 30		     26		OUT	PIO, AL
+ 2026 E4 30		     27		IN	AL, PIO
+ 2028 80 E0 FD		     28		AND 	AL, 0FDh
+ 202B E6 30		     29		OUT	PIO, AL		; fin p
+				ulso
+ 202D FF C3		     30		INC 	BX
+ 202F FE C9		     31		DEC	CL
+ 2031 75 E1		     32		JNZ 	POLL
+			     33	
+ 2033 CD 00		     34		INT 	0	
+			     35		END
+
+
+ S I M B O L O S:
+
+ Nombre:	Tipo:		Valor:
+
+ PIO     	Number		  30h
+
+
+
+								p gina: 2 
+
+ DATO    	Byte		1000h
+ FIN     	Byte		100Ah
+ POLL    	Label		2014h

@@ -1,0 +1,38 @@
+
+								p gina: 1 
+
+ Listado Fuente: eje0.LST
+ Programa Fuente en: eje0.ASM
+ Fecha: Tue Sep 19 09:15:12 2017
+
+ ÚDir.ÚCodigo maquina	 Linea¿	ÚCodigo en lenguaje ensamble
+
+			      1		
+			      2		org 1000h 			
+				;directiva donde guardo datos   
+ 1000 20		      3	    var_bytes DB 20h 	;numero en hexadecimal
+ 1001 20 1E		      4	    car_word  DW ?   	;reservo espacio de mem
+				ora con el ?
+			      5	    
+			      6	
+			      7		org 2000h 			
+				 ;directiva de segmento de codigo
+ 2000 B8 00 10		      8	    mov ax , 1000h 		 ;muevo al ax l
+				a direccion donde empiezan los datos
+			      9	                         ;se tienen que mover en
+				tre registros o entre registro en variable
+ 2003 8B D8		     10	    mov bx , ax 
+ 2005 8B 1E 00 10	     11	    mov bx, var_byte 
+ 2009 89 1E 73 3A	     12	    mov var_word, bx   
+Error: Etiqueta no definida.
+Error: Se espera un referencia a memoria.
+			     13	    
+			     14	end 
+
+
+ S I M B O L O S:
+
+ Nombre:	Tipo:		Valor:
+
+ var_byte	Byte		1000h
+ car_word	Word		1001h	No usado

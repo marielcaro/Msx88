@@ -1,0 +1,71 @@
+
+								p gina: 1 
+
+ Listado Fuente: ejer3b.LST
+ Programa Fuente en: ejer3b.ASM
+ Fecha: Thu Nov 16 19:08:24 2017
+
+ ÚDir.ÚCodigo maquina	 Linea¿	ÚCodigo en lenguaje ensamble
+
+			      1	PIC	EQU	20h
+			      2	HAND	EQU	40h
+			      3	NHAND	EQU	10
+			      4	
+			      5		ORG 	40 ;vectrde interrupcion
+ 0028 00 30		      6	IPHAND	DW	RUTHAND	
+			      7	
+			      8		ORG 	1000h
+ 1000 68 6F 6C 61 20 6D	      9	DATO	DB	"hola mundo"
+ 1006 75 6E 64 6F
+ 100A 68		     10	FIN	DB	?
+			     11	
+			     12		ORG	3000h
+ 3000 50		     13	RUTHAND:PUSH	AX
+ 3001 8A 07		     14		MOV	AL, [BX]	
+ 3003 E6 40		     15		OUT	HAND, AL
+ 3005 FF C3		     16		INC 	BX
+ 3007 FE C9		     17		DEC	CL
+ 3009 B0 20		     18		MOV	AL, 20h
+ 300B E6 20		     19		OUT	PIC, AL
+ 300D 58		     20		POP	AX
+ 300E CF		     21		IRET	
+			     22	
+			     23		ORG	2000h	
+			     24	
+ 2000 BB 00 10		     25		MOV	BX, OFFSET DATO
+ 2003 B1 0A		     26		MOV 	CL, OFFSET FIN - OFFSET DATO
+ 2005 FA		     27		CLI
+ 2006 B0 FB		     28		MOV 	AL, 0FBh
+ 2008 E6 21		     29		OUT	PIC+1, AL
+ 200A B0 0A		     30		MOV 	AL, NHAND
+ 200C E6 26		     31		OUT	PIC+6, AL
+ 200E B0 80		     32		MOV 	AL, 80h
+ 2010 E6 41		     33		OUT	HAND+1, AL
+ 2012 FB		     34		STI
+ 2013 80 F9 00		     35	CICLO:	CMP	CL, 0 
+ 2016 75 FB		     36		JNZ	CICLO
+ 2018 E4 41		     37		IN 	AL, HAND+1
+ 201A 80 E0 7F		     38		AND	AL, 7Fh
+ 201D E6 41		     39		OUT 	HAND+1, AL
+			     40	
+ 201F CD 00		     41		INT 	0	
+			     42		END
+
+
+ S I M B O L O S:
+
+ Nombre:	Tipo:		Valor:
+
+ PIC     	Number		  20h
+ HAND    	Number		  40h
+ NHAND   	Number		   Ah
+ IPHAND  	Word		  28h	No usado
+ DATO    	Byte		1000h
+ FIN     	Byte		100Ah
+
+
+
+								p gina: 2 
+
+ RUTHAND 	Label		3000h
+ CICLO   	Label		2013h
